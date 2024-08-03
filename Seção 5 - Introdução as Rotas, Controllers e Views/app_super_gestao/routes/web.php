@@ -21,7 +21,7 @@ Route::get('/', 'App\Http\Controllers\PrincipalController@principal')->name('sit
 Route::get('/about', 'App\Http\Controllers\SobreNosController@sobreNos')->name('site.sobrenos');
 
 Route::get('/contact', 'App\Http\Controllers\ContatoController@contato')->name('site.contato');
-Route::post('/contact', 'App\Http\Controllers\ContatoController@contato')->name('site.contato');
+Route::post('/contact', 'App\Http\Controllers\ContatoController@salvar')->name('site.contato');
 
 Route::get('/contato/{nome}/{categoria_id}', //
     function(
@@ -35,7 +35,7 @@ Route::get('/contato/{nome}/{categoria_id}', //
 
 Route::get('/teste/{p1}/{p2}', 'App\Http\Controllers\TesteController@teste')->name('teste');
 
-Route::prefix('/app')->group(function() {
+Route::middleware('log.acesso', 'autenticacao:ldap,visitante')->prefix('/app')->group(function() {
     Route::get('/clientes', function() { return 'Clientes'; })->name('app.clientes');
     Route::get('/fornecedores', 'App\Http\Controllers\FornecedorController@index')->name('app.fornecedores');
     Route::get('/produtos', function() { return 'produtos'; })->name('app.produtos');
