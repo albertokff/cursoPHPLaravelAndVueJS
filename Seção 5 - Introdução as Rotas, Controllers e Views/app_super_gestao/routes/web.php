@@ -1,6 +1,10 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\PrincipalController;
+use App\Http\Controllers\SobreNosController;
+use App\Http\Controllers\ContatoController;
+use App\Http\Controllers\LoginController;
 
 /*
 Route::get('/', function () {
@@ -16,12 +20,12 @@ Route::get('/contact', function() {
 });
 */
 
-Route::get('/', 'App\Http\Controllers\PrincipalController@principal')->name('site.principal');
-
-Route::get('/about', 'App\Http\Controllers\SobreNosController@sobreNos')->name('site.sobrenos');
-
-Route::get('/contact', 'App\Http\Controllers\ContatoController@contato')->name('site.contato');
-Route::post('/contact', 'App\Http\Controllers\ContatoController@salvar')->name('site.contato');
+Route::get('/', [PrincipalController::class, 'principal'])->name('site.principal');
+Route::get('/about', [SobreNosController::class, 'sobreNos'])->name('site.sobrenos');
+Route::get('/contact', [ContatoController::class, 'contato'])->name('site.contato');
+Route::post('/contact', [ContatoController::class, 'salvar'])->name('site.contato');
+Route::get('/login', [LoginController::class, 'index'])->name('site.login');
+Route::post('/login', [LoginController::class, 'autenticar'])->name('site.login');
 
 Route::get('/contato/{nome}/{categoria_id}', //
     function(
